@@ -15,7 +15,7 @@ const { marshall, unmarshall } = require('@aws-sdk/util-dynamodb'); // Retrieve 
 module.exports.getEmployeeSkill = async (event) => {
     //Initialize status code 200 OK 
     const response = { statusCode: 200 };
-    console.log('event data in request - ', event.resource, event.path, event.headers.Accept, event.httpMethod, event.body)
+    console.log('event data in request - ', event, event.resource, event.path, event.headers.Accept, event.httpMethod, event.body)
     switch (`${event.resource} ${event.httpMethod}`) {
         case 'employee/skill/{empId} GET':
             const empId = event.pathParameters.empId;
@@ -91,7 +91,7 @@ module.exports.getEmployeeSkill = async (event) => {
         default:
             response.statusCode = 404;
             response.body = JSON.stringify({
-                message: `Bad request -  ${event.resource}`,
+                message: `URL not found -  ${event.resource}`,
             })
     };
     //Return response with statusCode and data.
