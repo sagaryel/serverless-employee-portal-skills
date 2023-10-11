@@ -16,7 +16,9 @@ module.exports.getEmployeeSkill = async (event) => {
     //Initialize status code 200 OK 
     const response = { statusCode: 200 };
     console.log('event data in request - ', event, event.resource, event.path, event.headers.Accept, event.httpMethod, event.body)
-    switch (`${event.resource} ${event.httpMethod}`) {
+    const resource = event.resource;
+    const method = event.httpMethod;
+    switch (resource + " " + method) {
         case 'employee/skill/{empId} GET':
             const empId = event.pathParameters.empId;
             //Try block code - this block evaluates the employee retrieve function based on empId,
