@@ -18,8 +18,8 @@ module.exports.getEmployeeSkill = async (event) => {
     console.log('event data in request - ', event, event.resource, event.path, event.headers.Accept, event.httpMethod, event.body)
     const resource = event.resource;
     const method = event.httpMethod;
-    switch (resource + " " + method) {
-        case 'employee/skill/{empId} GET':
+    switch (resource) {
+        case 'employee/skill/{empId}':
             const empId = event.pathParameters.empId;
             //Try block code - this block evaluates the employee retrieve function based on empId,
             // If true it gives employee details or it catches server response error and displayes at console
@@ -59,7 +59,7 @@ module.exports.getEmployeeSkill = async (event) => {
             }
             break;
 
-        case 'employees/skill GET':
+        case 'employees/skill':
             try {
                 const input = {
                     TableName: process.env.DYNAMODB_TABLE_NAME,
