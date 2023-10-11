@@ -65,8 +65,7 @@ module.exports.getEmployeeSkill = async (event) => {
                     TableName: process.env.DYNAMODB_TABLE_NAME,
                     TableName: process.env.DYNAMODB_TABLE_NAME,
                     ProjectionExpression: " skilName, yearsOfKnowledge, skillLevel, certified, isActive, createdDateTime, updatedDateTime",
-                    // Add a FilterExpression if you want to filter the results
-                    FilterExpression: "IsActive = :isActive",
+                    FilterExpression: "IsActive = :isActive",        // Add a FilterExpression if you want to filter the results
                     ExpressionAttributeValues: {
                         ":isActive": true
                     }
