@@ -63,6 +63,13 @@ module.exports.getEmployeeSkill = async (event) => {
             try {
                 const input = {
                     TableName: process.env.DYNAMODB_TABLE_NAME,
+                    TableName: process.env.DYNAMODB_TABLE_NAME,
+                    ProjectionExpression: " skilName, yearsOfKnowledge, skillLevel, certified, isActive, createdDateTime, updatedDateTime",
+                    // Add a FilterExpression if you want to filter the results
+                    FilterExpression: "IsActive = :isActive",
+                    ExpressionAttributeValues: {
+                        ":isActive": true
+                    }
                 };
                 //Await response from db when sent scan command with tablename
                 const { Items } = await db.send(new ScanCommand(input));
@@ -88,7 +95,7 @@ module.exports.getEmployeeSkill = async (event) => {
                     errorStack: e.stack,
                 });
             }
-        break;
+            break;
 
         default:
             response.statusCode = 404;
