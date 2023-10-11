@@ -1,0 +1,90 @@
+#api gateway service name
+service: employee-crud-api
+#provider details
+provider:
+  #provider name
+  name: aws
+  #runtime for the project
+  runtime: nodejs18.x
+  #deployment stage / environment
+  stage: dev
+  #region to host
+  region: ap-south-1
+  #environment details
+  environment:
+    #Dynamodb table name - read from this file, custom header, employeeTableName key
+    DYNAMODB_TABLE_NAME: ${self:custom.employeeTableName}
+#custom section, which can be used as a variable
+custom:
+  #generate table name adding suffix from provider - stage name
+  employeeTableName: employeeSkills-${self:provider.stage}
+#plugins required
+plugins:
+  # creates iam roles for each function
+  - serverless-iam-roles-per-function
+#lambda functions section
+functions:
+  #function name
+  getEmployeeSkill:
+    #starting point of the function - pointing to the function
+    handler: app.getEmployeeSkill
+    #name of lambda function
+    name: get-employee-skill
+    #default memory assigned
+    memorySize: 128 # mb
+    #waiting for response timeout
+    timeout: 5 # seconds
+    #events for triggering the lambda function
+    events:
+      #http api get request to Get employee by ID
+      - http:
+          #path of api endpoint
+          path: employee/skill/{empId}
+          #http Get method
+          method: GET
+          cors: true
+      #http api get request to Get all employees
+      - http:
+          #path of api endpoint
+          path: employees/skill
+          #http Get method
+          method: GET
+          cors: true
+    #role definition for this lambda function
+    iamRoleStatements:
+      #allow iam role
+      - Effect: "Allow"
+        #allow iam role for this action  - only getItem action is allowed
+        Action:
+          - "dynamodb:GetItem"
+          - "dynamodb:Scan"
+            #resource of dynamodb - get attribute name from ARN of employeeTable
+        Resource: !GetAtt EmployeeTable.Arn
+
+#resources required
+resources:
+  Resources:
+    #EmployeeTable section has resource details of the table
+    EmployeeTable:
+      #type of aws service
+      Type: AWS::DynamoDB::Table
+      #Declare the properties of the table
+      Properties:
+        #Table name
+        TableName: ${self:custom.employeeTableName}
+        #Partition key definition
+        AttributeDefinitions:
+          #Partition key name
+          - AttributeName: empId
+            #Partition key type
+            AttributeType: S
+            #key schema for the table
+        KeySchema:
+          - AttributeName: empId
+            KeyType: HASH
+            # provisioned throughput for the table
+        ProvisionedThroughput:
+          #read capacity per second in units
+          ReadCapacityUnits: 1
+          #write capacity per second in units
+          WriteCapacityUnits: 1

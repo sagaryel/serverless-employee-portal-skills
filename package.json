@@ -1,0 +1,17 @@
+{
+  "name": "serverless-employee-portal-skills",
+  "version": "1.0.0",
+  "description": "get specific employee skills and get the all employee skills",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "sagar.yelgond@hyniva.com",
+  "license": "ISC",
+  "dependencies": {
+    "@aws-sdk/client-dynamodb": "^3.427.0",
+    "@aws-sdk/util-dynamodb": "^3.427.0",
+    "aws-sdk": "^2.1472.0",
+    "serverless-iam-roles-per-function": "^3.2.0"
+  }
+}
