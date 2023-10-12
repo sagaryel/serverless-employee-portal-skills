@@ -64,7 +64,7 @@ module.exports.getEmployeeSkill = async (event) => {
             try {
                 const input = {
                     TableName: process.env.DYNAMODB_TABLE_NAME,
-                    ProjectionExpression: " skilName, yearsOfKnowledge, skillLevel, certified, isActive, createdDateTime, updatedDateTime",
+                    ProjectionExpression: " SkillID, SkillName, YearsOfKnowledge, SkillLevel, Certified, IsActive, CreatedDateTime, UpdatedDateTime",
                     // FilterExpression: "IsActive = :isActive",        // Add a FilterExpression if you want to filter the results
                     // ExpressionAttributeValues: {
                     //     ":isActive": true
