@@ -28,6 +28,7 @@ module.exports.getEmployeeSkill = async (event) => {
                 const params = {
                     TableName: process.env.DYNAMODB_TABLE_NAME,
                     Key: marshall({ empId: empId }),
+                    ProjectionExpression: " skilName, yearsOfKnowledge, skillLevel, certified, isActive, createdDateTime, updatedDateTime",
                 };
                 //Await response from db when sent GetItemCommand 
                 //With params as argument containing tablename and key
