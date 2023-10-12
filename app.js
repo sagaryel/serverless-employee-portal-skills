@@ -65,9 +65,9 @@ module.exports.getEmployeeSkill = async (event) => {
                 const input = {
                     TableName: process.env.DYNAMODB_TABLE_NAME,
                     ProjectionExpression: " skilName, yearsOfKnowledge, skillLevel, certified, isActive, createdDateTime, updatedDateTime",
-                     FilterExpression: "isActive = :isActive",        // Add a FilterExpression if you want to filter the results
+                     FilterExpression: "isActive = :IsActive",        // Add a FilterExpression if you want to filter the results
                      ExpressionAttributeValues: {
-                         ":isActive": true
+                         ":IsActive": true
                      }
                 };
                 //Await response from db when sent scan command with tablename
