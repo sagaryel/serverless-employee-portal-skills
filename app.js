@@ -16,7 +16,7 @@ module.exports.getEmployeeSkill = async (event) => {
     //Initialize status code 200 OK 
     const response = { statusCode: 200 };
     console.log('event data in request - ', event, event.resource, event.path, event.headers.Accept, event.httpMethod, event.body)
-    const resource = event.resource;
+    const resource = event.resource; 
     const method = event.httpMethod;
     switch (resource + " " + method) {
         case '/employee/skill/{empId} GET':
@@ -65,15 +65,15 @@ module.exports.getEmployeeSkill = async (event) => {
                 const input = {
                     TableName: process.env.DYNAMODB_TABLE_NAME,
                     ProjectionExpression: " empId, skilName, yearsOfKnowledge, skillLevel, certified, isActive, createdDateTime, updatedDateTime",
-                     FilterExpression: "softDelete = :isActive",        // Add a FilterExpression if you want to filter the results
-                      ExpressionAttributeValues: {
-                          ":isActive": false
-                     }
+                    //  FilterExpression: "softDelete = :isActive",        // Add a FilterExpression if you want to filter the results
+                    //   ExpressionAttributeValues: {
+                    //       ":isActive": false
+                    //  }
                 };
                 //Await response from db when sent scan command with tablename
-                const { Items } = await db.send(new ScanCommand(input));
+                const Items  = await db.send(new ScanCommand(input));
                 console.log(JSON.stringify(Items));
-                if (!Items || Items.length === 0) { // If employees are not present
+                if (!Items || Items.Count === 0) { // If employees are not present
                     response.statusCode = 404; // Setting the status code to 404
                     response.body = JSON.stringify({
                         message: "Employees skills are not found.",
