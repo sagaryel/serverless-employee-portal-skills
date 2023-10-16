@@ -71,9 +71,9 @@ module.exports.getEmployeeSkill = async (event) => {
                     //  }
                 };
                 //Await response from db when sent scan command with tablename
-                const Items  = await db.send(new ScanCommand(input));
+                const { Items } = await db.send(new ScanCommand(input));
                 console.log(JSON.stringify(Items));
-                if (!Items || Items.Count === 0) { // If employees are not present
+                if (!Items || Items.length === 0) { // If employees are not present
                     response.statusCode = 404; // Setting the status code to 404
                     response.body = JSON.stringify({
                         message: "Employees skills are not found.",
