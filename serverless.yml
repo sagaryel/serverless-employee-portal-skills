@@ -58,6 +58,7 @@ functions:
         Action:
           - "dynamodb:GetItem"
           - "dynamodb:Scan"
+          - "dynamodb:Query"
             #resource of dynamodb - get attribute name from ARN of employeeTable
         Resource: !GetAtt EmployeeTable.Arn
 
