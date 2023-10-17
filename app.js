@@ -65,8 +65,10 @@ module.exports.getEmployeeSkill = async (event) => {
                 const input = {
                     TableName: process.env.DYNAMODB_TABLE_NAME,
                     ProjectionExpression: "empId, skilName, yearsOfKnowledge, skillLevel, certified, isActive, createdDateTime, updatedDateTime",
-                    FilterExpression: "softDelete = :softDeleteCondition",        // Add a FilterExpression if you want to filter the results
-                       ExpressionAttributeValues: marshall({ softDeleteCondition: false }),                      
+                    FilterExpression: "softDelete = :softDeleteCondition",
+                    ExpressionAttributeValues: {
+                        ":softDeleteCondition": { BOOL: false },            // Assuming "softDelete" is a Boolean attribute
+                    },                     
                 };
                 //Await response from db when sent scan command with tablename
                 const { Items } = await db.send(new ScanCommand(input));
