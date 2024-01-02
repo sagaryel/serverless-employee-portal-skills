@@ -50,6 +50,26 @@ functions:
           #http Get method
           method: GET
           cors: true
+      - http:
+          path: employee/{empID}
+          method: DELETE
+          cors: true
+      - http:
+          path: employee/{empID}/softDelete
+          method: DELETE
+          cors: true
+      - http:
+          path: employee/create/skills # Define the path parameter
+          method: POST  # Accept any HTTP method
+      - http:
+          path: employee/update/skills/{empId}
+          method: PUT  # Accept any HTTP method
+      - http:
+          path: employee/skills/get/{empId}/{skillId}
+          method: GET  # Accept any HTTP method
+      # - http:
+      #     path: employee/{empId}  # Define the path parameter
+      #     method: delete  # Accept any HTTP method
     #role definition for this lambda function
     iamRoleStatements:
       #allow iam role
